@@ -10,7 +10,7 @@
 # Please read the COPYING file.
 #
 
-import piksemel
+import piksemel   #py2
 import sys
 import yali.localedata
 

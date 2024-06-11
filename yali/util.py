@@ -19,10 +19,11 @@ import stat
 import errno
 import time
 import dbus
-import ConfigParser
+# import ConfigParser   #py2
+import configparser
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except Exception:
     _ = lambda x,y: y

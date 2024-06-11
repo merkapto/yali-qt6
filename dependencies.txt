@@ -35,6 +35,10 @@ efibootmgr
 squashfs-tools
 rsync
 
+Güncelleme
+----------
+? python 3 ve Qt6 'ya güncellenmeye çalışılıyor
+
 
 
 ? python-cairo  python-pygobject  python-pygobject-devel

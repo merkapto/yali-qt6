@@ -15,7 +15,7 @@ import os
 import sys
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except Exception:
     _ = lambda x,y : " ".join(x,y)
@@ -26,7 +26,7 @@ except Exception:
 import yali
 import yali.context as ctx
 
-from PyQt5.QtWidgets import QApplication
+from PyQt6.QtWidgets import QApplication
 
 
 def load_modules():
@@ -55,8 +55,10 @@ def load_config(options):
         ctx.logger.debug(_("General", "%s is missing") % ctx.consts.conf_file)
         sys.exit(1)
 
-    import ConfigParser
-    parser = ConfigParser.ConfigParser()
+    # import ConfigParser   #py2
+    import configparser   #py3
+    # parser = ConfigParser.ConfigParser()   #py2
+    parser = configparser.ConfigParser()   #py3
 
     try:
         if options.conffile and os.path.exists(options.conffile):
@@ -163,7 +165,8 @@ def setup_environment():
 def setup_exception_handler():
     import signal
     import traceback
-    import cStringIO
+    # import cStringIO   #py2
+    from io import StringIO   #py3
 
     def signal_handler(sig, frame):
         if sig == signal.SIGTERM:
@@ -173,7 +176,8 @@ def setup_exception_handler():
         """ YALI exception handler for showing exceptions in GUI """
         signal.signal(signal.SIGINT, signal.SIG_IGN)   # disable further interrupts
 
-        sio = cStringIO.StringIO()
+        # sio = cStringIO.StringIO()   #py2
+        sio = StringIO()
 
         sio.write(_("General", "Please file a bug report to <http://bugs.pisilinux.org>.\n"))
 
@@ -189,7 +193,8 @@ def setup_exception_handler():
         traceback.print_tb(error_traceback, None, sio)
 
         sio.seek(0)
-        exception_traceback = unicode(sio.read())
+        # exception_traceback = unicode(sio.read())   #py2
+        exception_traceback = str(sio.read())   #py3
 
         ctx.logger.debug(_("General", "Unhandled internal YALI exception:%s") % exception_traceback)
 

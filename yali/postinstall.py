@@ -17,7 +17,7 @@ import dbus
 import shutil
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except Exception:
     _ = lambda x, y: y
@@ -107,9 +107,11 @@ def setupTimeZone():
 def setHostName():
     if yali.util.check_link() and ctx.installData.hostName:
         ctx.logger.info("Setting hostname %s" % ctx.installData.hostName)
-        ctx.link.Network.Stack["baselayout"].setHostName(unicode(ctx.installData.hostName))
+        # ctx.link.Network.Stack["baselayout"].setHostName(unicode(ctx.installData.hostName))
+        ctx.link.Network.Stack["baselayout"].setHostName(str(ctx.installData.hostName))
         if ctx.flags.install_type == ctx.STEP_FIRST_BOOT:
-            yali.util.run_batch("hostname", [unicode(ctx.installData.hostName)])
+            # yali.util.run_batch("hostname", [unicode(ctx.installData.hostName)])
+            yali.util.run_batch("hostname", [str(ctx.installData.hostName)])
             yali.util.run_batch("update-environment")
             ctx.logger.info("Updating environment...")
         return True
@@ -133,7 +135,8 @@ def setupUsers():
             ctx.logger.info("User %s adding to system" % user.username)
             try:
                 user_id = ctx.link.User.Manager["baselayout"].addUser(user.uid, user.username, user.realname, "", "",
-                                                                      unicode(user.passwd), user.groups, [], [])
+                                                                    #   unicode(user.passwd), user.groups, [], [])
+                                                                      str(user.passwd), user.groups, [], [])
 
                 # user_id = ctx.link.User.Manager["baselayout"].addUser(
                 #     user.uid, user.username, user.realname, "", "",
@@ -186,7 +189,8 @@ def setPassword(uid=0, password=""):
         ctx.logger.info("Getting users from system")
         info = ctx.link.User.Manager["baselayout"].userInfo(uid)
         ctx.link.User.Manager["baselayout"].setUser(
-            uid, info[1], info[3], info[4], unicode(password), info[5])
+            # uid, info[1], info[3], info[4], unicode(password), info[5])
+            uid, info[1], info[3], info[4], str(password), info[5])
         return True
     return False
 

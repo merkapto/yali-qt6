@@ -21,25 +21,29 @@ import random
 import hashlib
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-import _sysutils
+# import _sysutils
+import sysutils
 
 
 def available_space(path):
-    return _sysutils.device_space_free(path)
+    # return _sysutils.device_space_free(path)
+    return sysutils.device_space_free(path)
 
 
 def ext2IsDirty(device):
-    label = _sysutils.e2dirty(device)
+    # label = _sysutils.e2dirty(device)
+    label = sysutils.e2dirty(device)
     return label
 
 
 def ext2HasJournal(device):
-    hasjournal = _sysutils.e2hasjournal(device)
+    # hasjournal = _sysutils.e2hasjournal(device)
+    hasjournal = sysutils.e2hasjournal(device)
     return hasjournal
 
 

@@ -12,7 +12,8 @@ import os
 import sys
 import glob
 import shutil
-import sipconfig
+# import sipconfig    #py2
+import sipbuild   #py3
 from distutils.core import setup, Extension
 from distutils.sysconfig import get_python_lib
 from distutils.cmd import Command
@@ -34,7 +35,8 @@ def update_messages():
 
     for lng in I18N_LANGUAGES:
         print(lng)
-        os.system("pylupdate5 -translate-function _ {files} -ts lang/{lang}.ts\
+        # os.system("pylupdate5 -translate-function _ {files} -ts lang/{lang}.ts\
+        os.system("pylupdate6 -translate-function _ {files} -ts lang/{lang}.ts\
             ".format(files=" ".join(files), lang=lng))
 
 
@@ -42,7 +44,8 @@ def release_messages():
     ts_files = glob.glob1("lang", "*.ts")
     ts_files = "lang/" + " lang/".join(ts_files)
 
-    os.system("lrelease {}".format(ts_files))
+    # os.system("lrelease {}".format(ts_files))
+    os.system("lrelease-qt6 {}".format(ts_files))
 
 
 def qt_ui_files():
@@ -65,11 +68,16 @@ class YaliBuild(build):
             replaced.write(line)
 
     def compileUI(self, ui_file):
-        pyqt_configuration = sipconfig.Configuration()
+        # pyqt_configuration = sipconfig.Configuration()  #py2
+        pyqt_configuration = sipbuild.configurable.Configurable.configure()   #py3
+        # pyuic_exe = find_executable(
+        #     'py2uic5', pyqt_configuration.default_bin_dir)
+        # if not pyuic_exe:
+        #     pyuic_exe = find_executable('py2uic5')
         pyuic_exe = find_executable(
-            'py2uic5', pyqt_configuration.default_bin_dir)
+            'pyuic6', pyqt_configuration.default_bin_dir)
         if not pyuic_exe:
-            pyuic_exe = find_executable('py2uic5')
+            pyuic_exe = find_executable('pyuic6')
 
         cmd = [pyuic_exe, ui_file, '-o']
         cmd.append(py_file_name(ui_file))

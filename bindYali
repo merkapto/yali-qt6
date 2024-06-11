@@ -1,5 +1,6 @@
 #!/bin/bash
-version=`python -c "import platform; print platform.python_version()[:3]"`
+# version=`python -c "import platform; print platform.python_version()[:3]"`    #py2
+version=`python3 -c "import platform; print(platform.python_version()[:4])"`    #python3.11
 
 cp -rf /usr/lib/python$version/site-packages/yali/ /yali
 mount --bind /yali/ /usr/lib/python$version/site-packages/yali/

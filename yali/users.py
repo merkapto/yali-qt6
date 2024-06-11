@@ -262,7 +262,8 @@ def nick_guess(name, nicklist):
     if name == "":
         return ""
 
-    text = unicode(name).lower().split()
+    # text = unicode(name).lower().split()   #py2
+    text = str(name).lower().split()   #py3
 
 
     ret = convert(text[0])
@@ -292,7 +293,8 @@ def nick_guess(name, nicklist):
     # Last guess: nameN
     i = 2
     while True:
-        ret = convert(text[0]) + unicode(i)
+        # ret = convert(text[0]) + unicode(i)   #py2
+        ret = convert(text[0]) + str(i)   #py3
         if not ret in nicklist:
             return ret
         i += 1
