@@ -5,7 +5,7 @@ import sys
 import time
 import errno
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except Exception:
     _ = lambda x,y: y
@@ -338,7 +338,11 @@ class StorageSet(object):
                     sys.exit(2)
 
 
-            except SystemError as (num, msg):
+            # except SystemError as (num, msg):   #py2
+            except SystemError as e:   #py3
+                num = e.args[0]   #py3 için. hata verirse e.args(0) dene :)
+                msg = e.args[1]   #py3 için. hata verirse e.args(1) dene :)
+                
                 ctx.logger.error("SystemError: (%d) %s" % (num, msg) )
 
                 if ctx.interface.messageWindow and not device.format.linuxNative:
@@ -471,7 +475,11 @@ class StorageSet(object):
                     if swapError(msg, device):
                         continue
 
-                except DeviceError as (msg, name):
+                # except DeviceError as (msg, name):   #py2
+                except DeviceError as e:   #py3
+                    msg = e.args[0]   #py3
+                    name = e.args[1]   #py3
+
                     if ctx.interface.messageWindow:
                         error = _("General", "Error enabling swap device %(name)s: "
                                   "%(msg)s<br><br>"

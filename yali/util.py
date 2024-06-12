@@ -96,7 +96,7 @@ def numeric_type(num):
     if num is None:
         num = 0
     elif not (isinstance(num, int) or \
-              isinstance(num, long) or \
+            #   isinstance(num, long) or \   #py2 long --> int
               isinstance(num, float)):
         raise ValueError("value (%s) must be either a number or None" % num)
 
@@ -427,7 +427,7 @@ def createAvailableSizeSwapFile(storage):
                 filesystems.append(info)
 
     for (device, availablespace) in filesystems:
-        if availablespace > maxsize and (size > (suggestion + 100)):
+        if availablespace > maxsize and (size > (suggestion + 100)):   # ne oldugunu anlamadım
             suggestedDevice = device
 
 
@@ -525,10 +525,12 @@ def backup_log(remove=False):
         shutil.copyfile("/var/log/yali.log", os.path.join(ctx.consts.target_dir, "var/log/yaliInstall.log"))
         if remove:
             os.remove("/var/log/yali.log")
-    except IOError, msg:
+    # except IOError, msg:   #py2
+    except IOError as msg:
         ctx.logger.debug("YALI log file doesn't exists.")
         return False
-    except Exception, msg:
+    # except Exception, msg:   #py2
+    except Exception as msg:
         ctx.logger.debug("File paths are the same.")
         return False
     else:
@@ -615,7 +617,8 @@ def writeKeymap(keymap):
 
 
 def write_config_option(conf_file, section, option, value):
-    configParser = ConfigParser.ConfigParser()
+    # configParser = ConfigParser.ConfigParser()   #py2
+    configParser = configparser.ConfigParser()
     configParser.read(conf_file)
     if not configParser.has_section(section):
         configParser.add_section(section)
@@ -627,7 +630,8 @@ def write_config_option(conf_file, section, option, value):
 def parse_branding_screens(release_file):
     try:
         document = piksemel.parse(release_file)
-    except OSError, msg:
+    # except OSError, msg:   #py2
+    except OSError as msg:
         if msg.errno == 2:
             raise yali.Error, _("General", "Release file is missing")
     except piksemel.ParseError:
@@ -652,7 +656,8 @@ def parse_branding_screens(release_file):
                     lang = title_tag.getAttribute("xml:lang")
                     if not lang:
                         lang = "en"
-                    titles[lang] = unicode(title_tag.firstChild().data())
+                    # titles[lang] = unicode(title_tag.firstChild().data())   #py2
+                    titles[lang] = str(title_tag.firstChild().data())
 
             help_tags = screen_tag.tags("help")
             if help_tags:
@@ -661,7 +666,8 @@ def parse_branding_screens(release_file):
                     lang = help_tag.getAttribute("xml:lang")
                     if not lang:
                         lang = "en"
-                    helps[lang] = unicode(help_tag.firstChild().data())
+                    # helps[lang] = unicode(help_tag.firstChild().data())   #py2
+                    helps[lang] = str(help_tag.firstChild().data())
 
             screens[name] = (icon, titles, helps)
 
@@ -671,7 +677,8 @@ def parse_branding_screens(release_file):
 def parse_branding_slideshows(release_file):
     try:
         document = piksemel.parse(release_file)
-    except OSError, msg:
+    # except OSError, msg:   #py2
+    except OSError as msg:
         if msg.errno == 2:
             raise yali.Error, _("General", "Release file is missing")
     except piksemel.ParseError:
@@ -693,7 +700,8 @@ def parse_branding_slideshows(release_file):
                     lang = description_tag.getAttribute("xml:lang")
                     if not lang:
                         lang = "en"
-                    descriptions[lang] = unicode(description_tag.firstChild().data())
+                    # descriptions[lang] = unicode(description_tag.firstChild().data())   #py2
+                    descriptions[lang] = str(description_tag.firstChild().data())
 
             slideshows.append((picture, descriptions))
 
@@ -707,7 +715,8 @@ def set_partition_privileges(device, mode, uid, gid):
         try:
             os.chmod(device_path, mode)
             os.chown(device_path, uid, gid)
-        except OSError, msg:
+        # except OSError, msg:   #py2
+        except OSError as msg:
             ctx.logger.debug("Unexpected error: %s" % msg)
 
 
@@ -806,7 +815,8 @@ def get_collections():
 
     try:
         piksemelObj = piksemel.parse(ctx.consts.pisi_collection_file)
-    except OSError, msg:
+    # except OSError, msg:   #py2
+    except OSError as msg:
         ctx.logger.debug("Unexcepted error:%s" % msg)
     else:
         default = False
@@ -821,8 +831,10 @@ def get_collections():
             translationsTag = collection.getTag("translations")
             translations["default"] = translationsTag.getAttribute("default")
             for translation in translationsTag.tags("translation"):
-                translations[translation.getAttribute("language")]= (unicode(translation.getTagData("title")),
-                                                                     unicode(translation.getTagData("description")))
+                # translations[translation.getAttribute("language")]= (unicode(translation.getTagData("title")),
+                                                                    #  unicode(translation.getTagData("description")))   #py2
+                translations[translation.getAttribute("language")]= (str(translation.getTagData("title")),
+                                                                     str(translation.getTagData("description")))
             title, description = _setLocale(id, translations)
             packageCollection.append(PackageCollection(id, title, description, icon, translations, default))
 
