@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from parted import PARTITION_SWAP, fileSystemType
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -10,6 +10,7 @@ except:
 
 from yali.storage.library.swap import swapon, swap_off, swap_status, mkswap, SwapError
 from yali.storage.formats import Format, FormatError, register_device_format
+import yali.context as ctx
 
 class SwapSpaceError(FormatError):
     pass
@@ -117,7 +118,8 @@ class SwapSpace(Format):
         if self.status:
             try:
                 swap_off(self.device)
-            except SwapError, msg:
+            # except SwapError, msg:   #py2
+            except SwapError as msg:   #py3
                 raise SwapSpaceError, msg
 
     def create(self, *args, **kwargs):
@@ -134,7 +136,8 @@ class SwapSpace(Format):
         try:
             Format.create(self, *args, **kwargs)
             mkswap(self.device, label=self.label)
-        except Exception, msg:
+        # except Exception, msg:   #py2
+        except Exception as msg:   #py3
             raise SwapSpaceError, msg
         else:
             self.exists = True

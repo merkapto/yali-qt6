@@ -3,7 +3,7 @@
 
 import os
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -435,7 +435,8 @@ class RaidArray(Device):
                             spares,
                             metadataVer=self.createMetadataVer,
                             bitmap=self.createBitmap)
-        except Exception, msg:
+        # except Exception, msg:
+        except Exception as msg:
             raise RaidArrayError, msg
         else:
             self.exists = True

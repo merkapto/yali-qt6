@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -31,7 +31,8 @@ class DirectoryDevice(FileDevice):
         self.setupParents()
         try:
             yali.util.mkdirChain(self.path)
-        except Exception, e:
+        # except Exception, e:
+        except Exception as e:
             raise DirectoryDeviceError(e, self.name)
 
         self.exists = True

@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 import math
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
 
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import *
+from PyQt6 import QtWidgets
+from PyQt6.QtCore import *
 
 import yali.context as ctx
 from yali.storage.library import raid
@@ -70,7 +70,8 @@ class PhysicalVolumeItem(QtWidgets.QWidget):
             self.editor.pvs.remove(self.pv)
             try:
                 self.widget.tmpVolumeGroup
-            except Exception, msg:
+            # except Exception, msg:
+            except Exception as msg:
                 self.editor.intf.messageWindow(_("General", "Not enough space"),
                                                _("General", "You cannot remove this physical volume because\n"
                                                  "otherwise the volume group will be too small to\n"

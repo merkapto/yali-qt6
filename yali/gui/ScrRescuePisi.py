@@ -14,14 +14,14 @@ import os
 import dbus
 import pisi
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget, QListWidgetItem
-from PyQt5.QtCore import pyqtSignal, QObject, QEvent
-from PyQt5.QtGui import QIcon
+from PyQt6.QtWidgets import QWidget, QListWidgetItem
+from PyQt6.QtCore import pyqtSignal, QObject, QEvent
+from PyQt6.QtGui import QIcon
 
 import yali.util
 import yali.pisiiface
@@ -164,7 +164,8 @@ class ConnectionWidget(QWidget):
         if self.connections:
             for package in self.connections.keys():
                 for connection in self.connections[package]:
-                    ci = ConnectionItem(self.ui.connectionList, unicode(str(connection)), package)
+                    # ci = ConnectionItem(self.ui.connectionList, unicode(str(connection)), package)
+                    ci = ConnectionItem(self.ui.connectionList, str(str(connection)), package)
 
             self.ui.connectionList.setCurrentRow(0)
             self.resize(ctx.mainScreen.size())

@@ -15,24 +15,24 @@ import sys
 import imp
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import QStyleFactory
-from PyQt5.QtCore import QObject
-from PyQt5.QtWidgets import QShortcut
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtCore import QTranslator
-from PyQt5.QtCore import QLocale
-from PyQt5.QtCore import QLibraryInfo
-from PyQt5.QtWidgets import QWidget
+from PyQt6.QtCore import QTimer
+from PyQt6.QtWidgets import QStyleFactory
+from PyQt6.QtCore import QObject
+from PyQt6.QtWidgets import QShortcut
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtCore import pyqtSlot
+from PyQt6.QtGui import QKeySequence
+from PyQt6.QtCore import QTranslator
+from PyQt6.QtCore import QLocale
+from PyQt6.QtCore import QLibraryInfo
+from PyQt6.QtWidgets import QWidget
 
 import yali
 import yali.util
@@ -57,7 +57,8 @@ class Runner():
         # Main Window Initialized..
         try:
             self._window = yali.gui.YaliWindow.Widget()
-        except yali.Error, msg:
+        # except yali.Error, msg:
+        except yali.Error as msg:
             print("error")
             ctx.logger.debug(msg)
             sys.exit(1)
@@ -129,7 +130,8 @@ class Runner():
                 loaded = imp.load_module(module_name, *found)
                 screenClass = loaded.__dict__["Widget"]
 
-            except ImportError, msg:
+            # except ImportError, msg:
+            except ImportError as msg:
                 ctx.logger.debug(msg)
                 rc = ctx.interface.messageWindow(_("General", "Error!"),
                                                  _("General", "An error occurred when attempting "

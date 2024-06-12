@@ -12,14 +12,14 @@ import sys
 import pardus.xorg
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget, QListWidgetItem, QLineEdit#,QFocusEvent
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QIcon
+from PyQt6.QtWidgets import QWidget, QListWidgetItem, QLineEdit#,QFocusEvent
+from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtGui import QIcon, QFocusEvent
 
 import yali.util
 import yali.context as ctx
@@ -42,8 +42,8 @@ class Widget(QWidget, ScreenWidget):
         self.ui.resetPassword.clicked.connect(self.slotResetPassword)
 
     def eventFilter(self,obj,event):
-        if even.type()==QEvent.FocusIn:
-            if obj== self.ui.password or obj==self.ui.confirm:
+        if event.type() == QWidget.focusInEvent(): #QEvent.FocusIn:
+            if obj == self.ui.password or obj==self.ui.confirm:
                 self.checkCapsLock()
 
     def refresh(self, current, previous):
@@ -79,7 +79,8 @@ class Widget(QWidget, ScreenWidget):
 
     def slotResetPassword(self):
         user = self.ui.users.currentItem().user
-        user.passwd = unicode(self.ui.password.text())
+        # user.passwd = unicode(self.ui.password.text())
+        user.passwd = str(self.ui.password.text())
         user_exist = False
         for pending_user in yali.users.PENDING_USERS:
             if pending_user.uid == user.uid:
@@ -96,8 +97,10 @@ class Widget(QWidget, ScreenWidget):
         user = self.ui.users.currentItem().user
         username = user.username
         realname = user.realname
-        password = unicode(self.ui.password.text())
-        password_confirm = unicode(self.ui.confirm.text())
+        # password = unicode(self.ui.password.text())
+        password = str(self.ui.password.text())
+        # password_confirm = unicode(self.ui.confirm.text())
+        password_confirm = str(self.ui.confirm.text())
 
         if not password == '' and (password.lower() == username.lower() or
                                    password.lower() == realname.lower()):

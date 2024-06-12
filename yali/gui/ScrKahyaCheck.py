@@ -11,19 +11,20 @@
 #
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtCore import pyqtSignal
+from PyQt6.QtWidgets import QWidget
+from PyQt6.QtCore import pyqtSignal
 
 import yali.context as ctx
 from yali.kahya import kahya
 from yali.gui import ScreenWidget, GUIError
 from yali.gui.Ui.kickerwidget import Ui_KickerWidget
 from yali.gui.YaliDialog import Dialog
+import yali
 
 def loadFile(path):
     """Read contents of a file"""

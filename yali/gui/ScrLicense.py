@@ -12,14 +12,14 @@
 import os
 import codecs
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtWidgets import  QTextBrowser
-from PyQt5.QtCore import pyqtSignal
+from PyQt6.QtWidgets import QWidget
+from PyQt6.QtWidgets import  QTextBrowser
+from PyQt6.QtCore import pyqtSignal
 
 import yali.context as ctx
 from yali.gui import ScreenWidget, GUIError
@@ -70,7 +70,8 @@ class LicenseBrowser(QTextBrowser):
 
         try:
             self.setText(codecs.open(self.loadFile(), "r", "UTF-8").read())
-        except Exception, msg:
+        # except Exception, msg:
+        except Exception as msg:
             raise GUIError(msg)
 
     def loadFile(self):

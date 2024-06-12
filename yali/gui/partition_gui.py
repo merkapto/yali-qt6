@@ -4,14 +4,14 @@ import os
 import copy
 import parted
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
 
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import *
+from PyQt6 import QtWidgets
+from PyQt6.QtCore import *
 
 import yali.util
 import yali.context as ctx
@@ -59,7 +59,8 @@ class PartitionEditor:
 
             widget = self.dialog.content
 
-            mountpoint = unicode(widget.mountpointMenu.currentText())
+            # mountpoint = unicode(widget.mountpointMenu.currentText())
+            mountpoint = str(widget.mountpointMenu.currentText())
             active = widget.mountpointMenu.isEnabled()
             if active and mountpoint:
                 msg = sanityCheckMountPoint(mountpoint)

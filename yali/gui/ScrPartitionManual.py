@@ -12,15 +12,15 @@
 import copy
 import parted
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
 
-from PyQt5.QtWidgets import QWidget, QMenu, QTreeWidgetItem, QAction
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QIcon
+from PyQt6.QtWidgets import QWidget, QMenu, QTreeWidgetItem, QAction
+from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtGui import QIcon
 
 import yali.util
 import yali.context as ctx
@@ -353,12 +353,14 @@ class Widget(QWidget, ScreenWidget):
             try:
                 doPartitioning(self.storage)
                 rc = 0
-            except PartitioningError, msg:
+            # except PartitioningError, msg:
+            except PartitioningError as msg:
                 self.intf.messageWindow(_("General", "Error Partitioning"), 
                                         _("General", "Could not allocate requested partitions: %s.") % msg,
                                         customIcon="error")
                 rc = -1
-            except PartitioningWarning, msg:
+            # except PartitioningWarning, msg:
+            except PartitioningWarning as msg:
                 rc = self.intf.messageWindow(_("General", "Warning Partitioning"),
                                              _("General", "Warning: %s.") % msg,
                                              customButtons=[_("General", "Modify Partition"), _("General", "Continue")],
@@ -393,7 +395,8 @@ class Widget(QWidget, ScreenWidget):
 
         try:
             freePartition = hasFreeDiskSpace(self.storage)
-        except AttributeError, msg:
+        # except AttributeError, msg:
+        except AttributeError as msg:
             ctx.logger.debug(msg)
         else:
             if freePartition:

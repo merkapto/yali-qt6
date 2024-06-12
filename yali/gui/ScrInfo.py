@@ -11,13 +11,14 @@
 #
 import os
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget, qApp
-from PyQt5.QtCore import pyqtSignal, QTranslator, QDir, QLocale
+# from PyQt6.QtWidgets import QWidget, qApp
+from PyQt6.QtWidgets import QWidget, QApplication #qApp
+from PyQt6.QtCore import pyqtSignal, QTranslator, QDir, QLocale
 import yali.context as ctx
 from yali.gui import ScreenWidget
 from yali.gui.Ui.info import Ui_InfoWidget
@@ -65,7 +66,8 @@ class Widget(QWidget, ScreenWidget):
 
     def loadLang(self, index=0, lang=None):
         try:
-            qApp.removeTranslator(self.translator)
+            # qApp.removeTranslator(self.translator)
+            QApplication.removeTranslator(self.translator)
         except:
             pass
 
@@ -82,7 +84,8 @@ class Widget(QWidget, ScreenWidget):
         self.translator = QTranslator()
 
         self.translator.load(qmFile)
-        qApp.installTranslator(self.translator)
+        # qApp.installTranslator(self.translator)
+        QApplication.installTranslator(self.translator)
         self.retranslateUi()
         
         ctx.mainScreen.retranslateUi()
@@ -95,7 +98,8 @@ class Widget(QWidget, ScreenWidget):
         try:
             hata_sayisi = 0
             
-            for widget in qApp.allWidgets():
+            # for widget in qApp.allWidgets():
+            for widget in QApplication.allWidgets():
                 try:
                     widget.ui.retranslateUi(widget)
                 except:

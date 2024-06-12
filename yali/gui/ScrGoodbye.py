@@ -11,13 +11,13 @@
 import sys
 import time
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtGui import QPixmap
+from PyQt6.QtWidgets import QWidget
+from PyQt6.QtGui import QPixmap
 
 import yali.util
 import yali.context as ctx

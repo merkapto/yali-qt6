@@ -13,18 +13,18 @@ import os
 import random
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
 
-from PyQt5.QtWidgets import (QWidget, QHBoxLayout, QVBoxLayout, QLabel, QSpacerItem, QSizePolicy,
+from PyQt6.QtWidgets import (QWidget, QHBoxLayout, QVBoxLayout, QLabel, QSpacerItem, QSizePolicy,
                              QPushButton, QDialog, QFrame, QMessageBox, QShortcut, QGridLayout)
 
-from PyQt5.QtCore import (Qt, pyqtSignal, QObject, QMetaObject, QSize, QTimer, QBasicTimer)
+from PyQt6.QtCore import (Qt, pyqtSignal, QObject, QMetaObject, QSize, QTimer, QBasicTimer)
 
-from PyQt5.QtGui import (QPainter, QColor, QPixmap, QMovie)
+from PyQt6.QtGui import (QPainter, QColor, QPixmap, QMovie)
 
 import pisi
 import yali
@@ -188,7 +188,8 @@ class MessageWindow:
         text = "<qt>%s</qt>" % text.replace("\n", " ")
         self.msgBox.setText(text)
         if detailed:
-            self.msgBox.setDetailedText(unicode(longText))
+            # self.msgBox.setDetailedText(unicode(longText))
+            self.msgBox.setDetailedText(str(longText))
 
         if self.doCustom:
             button = None

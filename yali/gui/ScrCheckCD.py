@@ -11,14 +11,14 @@
 #
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except Exception:
     _ = lambda x, y: y
 
-from PyQt5.QtWidgets import QWidget
-# from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt6.QtWidgets import QWidget
+# from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtGui import QIcon, QPixmap
 
 import pisi.ui
 import yali.context as ctx

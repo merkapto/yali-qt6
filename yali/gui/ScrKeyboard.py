@@ -10,13 +10,13 @@
 # Please read the COPYING file.
 #
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtCore import pyqtSignal, QVariant
+from PyQt6.QtWidgets import QWidget
+from PyQt6.QtCore import pyqtSignal, QVariant
 
 import yali.util
 import yali.localedata

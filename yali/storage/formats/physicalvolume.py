@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -75,7 +75,8 @@ class PhysicalVolume(Format):
             Format.destroy(self, *args, **kwargs)
 
             lvm.pvcreate(self.device)
-        except Exception, msg:
+        # except Exception, msg:   #py2
+        except Exception as msg:   #py3
             raise PhysicalVolumeError("Create device failed!", self.device)
         else:
             self.exists = True

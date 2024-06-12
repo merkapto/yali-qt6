@@ -11,13 +11,13 @@
 #
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget, QComboBox
-from PyQt5.QtCore import pyqtSignal, QTimer, QDate, QTime, QLocale, QTimeZone, QDateTime
+from PyQt6.QtWidgets import QWidget, QComboBox
+from PyQt6.QtCore import pyqtSignal, QTimer, QDate, QTime, QLocale, QTimeZone, QDateTime
 
 from pds.thread import PThread
 from pds.gui import PMessageBox, MIDCENTER, CURRENT, OUT

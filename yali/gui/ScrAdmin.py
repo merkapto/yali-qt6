@@ -11,13 +11,13 @@
 #
 import pardus.xorg
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget, QLineEdit
-from PyQt5.QtCore import pyqtSignal, QTimer
+from PyQt6.QtWidgets import QWidget, QLineEdit
+from PyQt6.QtCore import pyqtSignal, QTimer
 from pds.thread import PThread
 from pds.gui import PMessageBox, MIDCENTER, CURRENT, OUT
 
@@ -79,8 +79,10 @@ class Widget(QWidget, ScreenWidget):
         pass
 
     def execute(self):
-        ctx.installData.rootPassword = unicode(self.ui.pass1.text())
-        ctx.installData.hostName = unicode(self.ui.hostname.text())
+        # ctx.installData.rootPassword = unicode(self.ui.pass1.text())
+        ctx.installData.rootPassword = str(self.ui.pass1.text())
+        # ctx.installData.hostName = unicode(self.ui.hostname.text())
+        ctx.installData.hostName = str(self.ui.hostname.text())
 
         if ctx.flags.install_type == ctx.STEP_DEFAULT:
             #FIXME:Refactor dirty code

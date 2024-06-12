@@ -8,8 +8,8 @@ except:
     _ = lambda x,y: y
 
 
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import *
+from PyQt6 import QtWidgets
+from PyQt6.QtCore import *
 
 import yali.context as ctx
 from yali.gui import storageGuiHelpers
@@ -102,7 +102,8 @@ class ShrinkWidget(QtWidgets.QWidget, Ui_ShrinkPartitionWidget):
                 geomsize = request.partedPartition.geometry.getSize(unit="MB")
                 if (geomsize != 0) and (requestupper > geomsize):
                     requestupper = geomsize
-        except FilesystemError, msg:
+        # except FilesystemError, msg:
+        except FilesystemError as msg:
             ctx.logger.error("Shrink Widget update spin gives error:%s" % msg)
         else:
             self.sizeSpin.setRange(max(1, requestlower), requestupper)

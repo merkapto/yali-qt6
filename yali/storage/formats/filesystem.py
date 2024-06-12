@@ -7,7 +7,7 @@ import math
 from parted import fileSystemType
 import pardus.sysutils
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -168,7 +168,8 @@ class Filesystem(Format):
                         if line.startswith(field):
                             for subfield in tmp:
                                 try:
-                                    values.append(long(subfield))
+                                    # values.append(long(subfield))   #py2
+                                    values.append(int(subfield))   #py3
                                     found = True
                                     break
                                 except ValueError:
@@ -802,7 +803,8 @@ class Ext2Filesystem(Filesystem):
                     # NOTE: The minimum size reported is in blocks.  Convert
                     # to bytes, then megabytes, and finally round up.
                     (text, sep, minSize) = line.partition(": ")
-                    size = long(minSize) * blockSize
+                    # size = long(minSize) * blockSize   #py2
+                    size = int(minSize) * blockSize   #py3
                     size = math.ceil(size / 1024.0 / 1024.0)
                     break
 
@@ -1042,7 +1044,8 @@ class NTFSFilesystem(Filesystem):
                     try:
                         min = l.split(":")[1].strip()
                         minSize = int(min) + 250
-                    except Exception, e:
+                    # except Exception, e:   #py2
+                    except Exception as e:   #py3
                         minSize = None
                         ctx.logger.warning("Unable to parse output for minimum size on %s: %s" %(self.device, e))
 

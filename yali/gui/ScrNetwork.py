@@ -3,13 +3,13 @@
 
 import pds.container
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget, QGridLayout
-from PyQt5.Qt import pyqtSignal
+from PyQt6.QtWidgets import QWidget, QGridLayout
+# from PyQt6.QtCore import pyqtSignal
 
 import yali.context as ctx
 from yali.gui import ScreenWidget

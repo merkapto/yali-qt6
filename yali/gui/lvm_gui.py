@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 import copy
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except Exception:
     _ = lambda x, y: y
 
-from PyQt5.QtWidgets import QWidget, QTreeWidgetItem
-from PyQt5.QtCore import pyqtSignal, QObject, QSize
+from PyQt6.QtWidgets import QWidget, QTreeWidgetItem
+from PyQt6.QtCore import pyqtSignal, QObject, QSize
 
 import yali.context as ctx
 from yali.gui.YaliDialog import Dialog
@@ -368,12 +368,14 @@ class VolumeGroupWidget(QWidget, Ui_VolumeGroupWidget):
 
             waste = 0.0
             for pv in pvs:
-                waste = max(waste, (long(pv.size*1024) % physicalextend)/(pv.size*1024.0))
+                # waste = max(waste, (long(pv.size*1024) % physicalextend)/(pv.size*1024.0))
+                waste = max(waste, (int(pv.size*1024) % physicalextend)/(pv.size*1024.0))
 
             return waste
 
         def computeVolumeGroupSize(pvs, curpe):
-            availSpace = 0L
+            # availSpace = 0L
+            availSpace = 0
             for pv in pvs:
                 # have to clamp pvsize to multiple of PE
                 # XXX why the suboperation? fudging metadata?
@@ -612,7 +614,8 @@ class LogicalVolumeEditor:
 
             format = self.origrequest.format
 
-            mountpoint = unicode(widget.mountpointMenu.currentText())
+            # mountpoint = unicode(widget.mountpointMenu.currentText())
+            mountpoint = str(widget.mountpointMenu.currentText())
             if mountpoint and widget.mountpointMenu.isEditable():
                 msg = sanityCheckMountPoint(mountpoint)
                 if msg:
@@ -681,7 +684,8 @@ class LogicalVolumeEditor:
             if not self.origrequest.exists:
                 badsize = 0
                 try:
-                    size = long(widget.sizeSpin.value())
+                    # size = long(widget.sizeSpin.value())
+                    size = int(widget.sizeSpin.value())
                 except:
                     size = 1
 
@@ -720,7 +724,8 @@ class LogicalVolumeEditor:
                 self.origrequest._name = name
                 try:
                     self.origrequest.size = size
-                except ValueError, msg:
+                # except ValueError, msg:
+                except ValueError as msg:
                     self.intf.messageWindow(_("General", "Not enough space"),
                                             _("General", "The size entered for this "
                                               "logical volume (%(size)d MB) "
@@ -900,7 +905,8 @@ class LogicalVolumeWidget(QWidget, Ui_LogicalVolumeWidget):
         if self.formatRadio.isVisible():
             self.radioButton.setChecked(True)
             self.formatRadio.setChecked(self.mountpointMenu.itemData(index))
-            print "lvm_gui.py line 897 must be bool", type(self.mountpointMenu.itemData(index))
+            # print "lvm_gui.py line 897 must be bool", type(self.mountpointMenu.itemData(index))
+            print("lvm_gui.py line 897 must be bool", type(self.mountpointMenu.itemData(index)))
 
 class LogicalVolumeItem(QTreeWidgetItem):
     def __init__(self, parent, device):

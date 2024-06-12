@@ -10,16 +10,16 @@
 # Please read the COPYING file.
 #
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except Exception:
     _ = lambda x,y: y
 import pardus.xorg
 
 
-from PyQt5.QtWidgets import (QWidget, QLineEdit, QListWidgetItem)#, QFocusEvent
-from PyQt5.QtCore import (QTimeLine, QEvent)  # pyqtSignal,
-from PyQt5.QtGui import (QIcon, QPixmap)
+from PyQt6.QtWidgets import (QWidget, QLineEdit, QListWidgetItem)#, QFocusEvent
+from PyQt6.QtCore import (QTimeLine, QEvent)  # pyqtSignal,
+from PyQt6.QtGui import (QIcon, QPixmap)
 
 
 import yali.users
@@ -200,9 +200,12 @@ class Widget(QWidget, ScreenWidget):
 
     def slotTextChanged(self):
         username = str(self.ui.username.text())
-        realname = unicode(self.ui.realname.text())
-        password = unicode(self.ui.pass1.text())
-        password_confirm = unicode(self.ui.pass2.text())
+        # realname = unicode(self.ui.realname.text())
+        realname = str(self.ui.realname.text())
+        # password = unicode(self.ui.pass1.text())
+        password = str(self.ui.pass1.text())
+        # password_confirm = unicode(self.ui.pass2.text())
+        password_confirm = str(self.ui.pass2.text())
 
         if not password == '' and (password.lower() == username.lower() or
                                    password.lower() == realname.lower()):
@@ -246,8 +249,10 @@ class Widget(QWidget, ScreenWidget):
         user = yali.users.User()
         user.username = str(self.ui.username.text())
         # ignore last character. see bug #887
-        user.realname = unicode(self.ui.realname.text())
-        user.passwd = unicode(self.ui.pass1.text())
+        # user.realname = unicode(self.ui.realname.text())
+        user.realname = str(self.ui.realname.text())
+        # user.passwd = unicode(self.ui.pass1.text())
+        user.passwd = str(self.ui.pass1.text())
         user.groups = ["users", "pnp", "disk", "audio", "video", "power",
                      "dialout", "lp", "lpadmin", "cdrom", "floppy"]
         pix = self.normal_user_icon
@@ -358,10 +363,14 @@ class Widget(QWidget, ScreenWidget):
         self.ui.cancelButton.setVisible(self.ui.createButton.isVisible())
 
     def checkUserFields(self):
-        username = unicode(self.ui.username.text())
-        realname = unicode(self.ui.realname.text())
-        password = unicode(self.ui.pass1.text())
-        password_confirm = unicode(self.ui.pass2.text())
+        # username = unicode(self.ui.username.text())
+        username = str(self.ui.username.text())
+        # realname = unicode(self.ui.realname.text())
+        realname = str(self.ui.realname.text())
+        # password = unicode(self.ui.pass1.text())
+        password = str(self.ui.pass1.text())
+        # password_confirm = unicode(self.ui.pass2.text())
+        password_confirm = str(self.ui.pass2.text())
         if username and realname and password and password_confirm and \
         (password == password_confirm) and \
         (password.lower() != username.lower() and password.lower() != realname.lower()):

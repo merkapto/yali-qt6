@@ -1,14 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
 
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtCore import pyqtSignal, QObject, QSize, Qt
+from PyQt6.QtWidgets import QWidget
+from PyQt6.QtCore import pyqtSignal, QObject, QSize, Qt
 
 from yali.gui.YaliDialog import Dialog
 from yali.gui.Ui.raid import Ui_RaidWidget
@@ -65,7 +65,8 @@ class RaidEditor(object):
 
             widget = self.dialog.content
 
-            mountpoint = unicode(widget.mountpointMenu.currentText())
+            # mountpoint = unicode(widget.mountpointMenu.currentText())
+            mountpoint = str(widget.mountpointMenu.currentText())
             active = widget.mountpointMenu.isEnabled()
             if active and mountpoint:
                 msg = sanityCheckMountPoint(mountpoint)
@@ -125,8 +126,10 @@ class RaidEditor(object):
                                                         parents=raidmembers,
                                                         totalDevices=len(raidmembers),
                                                         memberDevices=members)
-                except ValueError, msg:
-                    self.intf.messageWindow(_("General", "Invalid Raid Members"), unicode(msg),
+                # except ValueError, msg:
+                except ValueError as msg:
+                    # self.intf.messageWindow(_("General", "Invalid Raid Members"), unicode(msg),
+                    self.intf.messageWindow(_("General", "Invalid Raid Members"), str(msg),
                                             type="warning")
                     continue
 

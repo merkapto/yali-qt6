@@ -12,14 +12,14 @@
 import sys
 import math
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget, QListWidgetItem
-from PyQt5.QtCore import pyqtSignal, QObject, QSize
-from PyQt5.QtGui import QPixmap
+from PyQt6.QtWidgets import QWidget, QListWidgetItem
+from PyQt6.QtCore import pyqtSignal, QObject, QSize
+from PyQt6.QtGui import QPixmap
 
 import yali.context as ctx
 from yali.gui import ScreenWidget, GUIError

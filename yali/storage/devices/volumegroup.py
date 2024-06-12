@@ -3,7 +3,7 @@
 import os
 import math
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -204,7 +204,8 @@ class VolumeGroup(DeviceMapper):
         """
         try:
             self.parents.remove(device)
-        except ValueError, e:
+        # except ValueError, e:
+        except ValueError as e:
             raise ValueError("cannot remove non-member PV device from VG")
 
         device.removeChild()
@@ -252,7 +253,8 @@ class VolumeGroup(DeviceMapper):
 
             pv_list = [pv.path for pv in self.parents]
             lvm.vgcreate(self.name, pv_list, self.peSize)
-        except Exception, msg:
+        # except Exception, msg:
+        except Exception as msg:
             raise VolumeGroupError, msg
         else:
             # FIXME set / update self.uuid here
@@ -409,7 +411,8 @@ class VolumeGroup(DeviceMapper):
         # we want Kbytes as a float for our math
         size *= 1024.0
         pesize = self.peSize * 1024.0
-        return long((round(size / pesize) * pesize) / 1024)
+        # return long((round(size / pesize) * pesize) / 1024)
+        return int((round(size / pesize) * pesize) / 1024)
 
     @property
     def pvs(self):

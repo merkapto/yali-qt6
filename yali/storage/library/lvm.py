@@ -6,7 +6,7 @@ import os
 import math
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -141,7 +141,8 @@ def clampSize(size, pesize, roundup=None):
     else:
         round = math.floor
 
-    return long(round(float(size)/float(pesize)) * pesize)
+    # return long(round(float(size)/float(pesize)) * pesize)   #py2
+    return int(round(float(size)/float(pesize)) * pesize)   #py3
 
 def lvm(args):
     rc, out, err = yali.util.run_batch("lvm", args)

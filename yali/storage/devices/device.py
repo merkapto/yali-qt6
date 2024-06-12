@@ -4,7 +4,7 @@ import os
 import _ped
 import parted
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -178,7 +178,8 @@ class Device(AbstractDevice):
         path = os.path.normpath("/sys/%s" % self.sysfsPath)
         try:
             yali.util.notify_kernel(path, action="change")
-        except Exception, e:
+        # except Exception, e:
+        except Exception as e:
             ctx.logger.warning("failed to notify kernel of change: %s" % e)
 
     @property

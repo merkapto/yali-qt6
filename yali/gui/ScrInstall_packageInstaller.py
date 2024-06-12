@@ -11,17 +11,18 @@
 #
 import os
 from multiprocessing import Process, Queue
-from Queue import Empty
+# from Queue import Empty
+# from queue import Queue
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except Exception:
     _ = lambda x, y: y
 
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtCore import QTimer, QMutex, QWaitCondition  # pyqtSignal, QObject
-from PyQt5.QtGui import QPixmap
+from PyQt6.QtWidgets import QWidget
+from PyQt6.QtCore import QTimer, QMutex, QWaitCondition  # pyqtSignal, QObject
+from PyQt6.QtGui import QPixmap
 
 import pisi.ui
 
@@ -162,7 +163,8 @@ class Widget(QWidget, ScreenWidget):
             try:
                 data = self.queue.get_nowait()
                 event = data[0]
-            except Empty:
+            # except Empty:
+            except Queue.empty:
                 return
 
             ctx.logger.debug("checkQueueEvent: Processing %s event..." % event)
@@ -397,7 +399,9 @@ class PisiUI(pisi.ui.UI):
             self.queue.put_nowait(data)
 
     def error(self, msg):
-        ctx.logger.debug("PisiUI.error: %s" % unicode(msg))
+        # ctx.logger.debug("PisiUI.error: %s" % unicode(msg))
+        ctx.logger.debug("PisiUI.error: %s" % str(msg))
 
     def warning(self, msg):
-        ctx.logger.debug("PisiUI.warning: %s" % unicode(msg))
+        # ctx.logger.debug("PisiUI.warning: %s" % unicode(msg))
+        ctx.logger.debug("PisiUI.warning: %s" % str(msg))

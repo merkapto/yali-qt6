@@ -14,17 +14,17 @@ import sys
 import codecs
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except Exception:
     _ = lambda x,y: y
 
-from PyQt5.QtCore import (QResource, pyqtSignal, QObject, Qt, QTimer, QSize)
+from PyQt6.QtCore import (QResource, pyqtSignal, QObject, Qt, QTimer, QSize)
 
-from PyQt5.QtWidgets import (QWidget, QAction, QTextBrowser,
+from PyQt6.QtWidgets import (QWidget, QAction, QTextBrowser,
                              QGraphicsOpacityEffect, QMenu, QShortcut)
 
-from PyQt5.QtGui import (QPixmap, QCursor, QPixmap, QKeySequence, QIcon)
+from PyQt6.QtGui import (QPixmap, QCursor, QPixmap, QKeySequence, QIcon)
 
 from QTermWidget import QTermWidget
 from pyaspects.weaver import weave_object_method
@@ -380,7 +380,8 @@ class Widget(QWidget):
             weave_object_method(disableNavButtonsAspect, screen, "execute")
             try:
                 self.ui.mainStack.addWidget(screen())
-            except Exception, msg:
+            # except Exception, msg:
+            except Exception as msg:
                 rc = ctx.interface.messageWindow(
                     _("General", "Error"),
                     _("General", "An error occurred when attempting "
@@ -439,7 +440,8 @@ class ReleaseNotes(QTextBrowser):
 
         try:
             self.setText(codecs.open(self.loadFile(), "r", "UTF-8").read())
-        except Exception, msg:
+        # except Exception, msg:
+        except Exception as msg:
             ctx.logger.error(_("General", "An error occurred when showing "
                                           "to release nostes:%s") % (msg))
 

@@ -12,14 +12,14 @@
 import sys
 import os
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
 
-from PyQt5.QtWidgets import QWidget, QListWidgetItem
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QIcon
+from PyQt6.QtWidgets import QWidget, QListWidgetItem
+from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtGui import QIcon
 
 import yali.storage
 import yali.util

@@ -3,7 +3,7 @@
 
 import os
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -68,7 +68,8 @@ def collect_device_formats():
             module_name = moduleFile[:-3]
             try:
                 globals()[module_name] = __import__(module_name, globals(), locals(), [], -1)
-            except ImportError, e:
+            # except ImportError, e:   #py2
+            except ImportError as e:   #py3
                 ctx.logger.debug("import of device format module '%s' failed" % module_name)
 
 def get_device_format(formatType):
@@ -199,7 +200,8 @@ class Format(object):
         if self.device.startswith("/dev/mapper/"):
             try:
                 name = devicemapper.dm_node_from_name(os.path.basename(self.device))
-            except Exception, e:
+            # except Exception, e:   #py2
+            except Exception as e:   #py3
                 ctx.logger.warning("failed to get dm node for %s" % self.device)
                 return
         elif self.device:
@@ -208,7 +210,8 @@ class Format(object):
         path = yali.util.get_sysfs_path_by_name(name)
         try:
             yali.util.notify_kernel(path, action="change")
-        except Exception, e:
+        # except Exception, e:   #py2
+        except Exception as e:   #py3
             ctx.logger.warning("failed to notify kernel of change: %s" % e)
 
 
