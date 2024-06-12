@@ -5,7 +5,7 @@ import os
 import block
 import parted
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -34,6 +34,16 @@ from yali.storage.formats.disklabel import InvalidDiskLabelError, DiskLabelCommi
 from yali.storage.formats.filesystem import FilesystemError
 from yali.storage.formats.raidmember import RaidMember
 
+from operator import gt, lt
+#cmp() fonksiyonu python2'de olup python3'te kaldırılmış. kendi cmp() fonksiyonumu yazdım :)
+def cmp(a, b):
+    if gt(a, b):
+        return 1
+    elif lt(a, b):
+        return -1
+    else:
+        return 0
+    
 class DeviceTreeError(StorageError):
     pass
 
@@ -1523,7 +1533,10 @@ class DeviceTree(object):
                 self._addDevice(lv_device)
                 try:
                     lv_device.setup()
-                except DeviceError as (msg, name):
+                # except DeviceError as (msg, name):   #py2
+                except DeviceError as e:   #py3
+                    msg = e.args[0]   #py3 için. hata verirse e.args(1) dene :)
+                    name = e.args[1]   #py3 için. hata verirse e.args(0) dene :)
                     ctx.logger.info("setup of %s failed: %s" % (lv_device.name, msg))
 
         return ret

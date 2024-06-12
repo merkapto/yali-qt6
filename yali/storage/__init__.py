@@ -3,7 +3,7 @@ import os
 import sys
 import parted
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -52,7 +52,8 @@ def complete(storage, intf):
     returncode = False
     try:
         storage.devicetree.teardownAll()
-    except DeviceTreeError, msg:
+    # except DeviceTreeError, msg:   #py2
+    except DeviceTreeError as msg:
         ctx.logger.debug(_("General", "Failed teardownAll in storage.complete with error:%s") % msg)
         return returncode
 
@@ -61,13 +62,21 @@ def complete(storage, intf):
     details = None
     try:
         storage.doIt()
-    except DeviceError as (msg, device):
+    # except DeviceError as (msg, device):   #py2
+    except DeviceError as e:   #py3
+        msg = e.args[0]
+        device = e.args[1]
+
         title = _("General", "Storage Device Error")
         message = _("General", "There was an error encountered while "
                     "partitioning on device %s.") % (device,)
         details = msg
         returncode = False
-    except FormatError as (msg, device):
+    # except FormatError as (msg, device):   #py2
+    except FormatError as e:   #py3
+        msg = e.args[0]
+        device = e.args[1]
+
         title = _("General", "Storage Format Error")
         message = _("General", "There was an error encountered while "
                     "formatting on device %s.") % (device,)
@@ -138,12 +147,14 @@ def mountExistingSystem(storage, intf, rootDevice, allowDirty=None, warnDirty=No
 
     try:
         storage.storageset.parseFSTab()
-    except FSTabError, msg:
+    # except FSTabError, msg:   #py2
+    except FSTabError as msg:
         ctx.logger.error("Parsing fstab file failed with:%s" % msg)
         rootDevice.format.unmount()
         rootDevice.teardown()
         return False
-    except Exception, msg:
+    # except Exception, msg:   #py2
+    except Exception as msg:
         ctx.logger.error("Unhandled exception:%s" % msg)
     else:
         dirtyDevs = []

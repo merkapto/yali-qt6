@@ -3,11 +3,12 @@
 import sys
 import os
 import parted
+import functools
 from operator import add, sub, gt, lt
 #import gettext
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except:
     _ = lambda x,y: y
@@ -20,6 +21,15 @@ from yali.storage.devices.device import devicePathToName
 from yali.storage.devices.partition import Partition
 
 CLEARPART_TYPE_ALL, CLEARPART_TYPE_LINUX, CLEARPART_TYPE_NONE = range(3)
+
+#cmp() fonksiyonu python2'de olup python3'te kaldırılmış. kendi cmp() fonksiyonumu yazdım :)
+def cmp(a, b):
+    if gt(a, b):
+        return 1
+    elif lt(a, b):
+        return -1
+    else:
+        return 0
 
 class PartitioningError(StorageError):
     pass
@@ -586,7 +596,8 @@ def getBestFreeSpaceRegion(disk, part_type, req_size, boot=None, best_free=None,
 
             try:
                 free_geom = extended.geometry.intersect(_range)
-            except ArithmeticError, e:
+            # except ArithmeticError, e:   #py2
+            except ArithmeticError as e:
                 free_geom = None
 
             if (free_geom and part_type == parted.PARTITION_NORMAL) or \
@@ -1301,7 +1312,7 @@ def growLVM(storage):
             ctx.logger.debug("grow is %dMB" % grow)
 
             todo = lvs[lvs.index(lv):]
-            unallocated = reduce(lambda x,y: x+y,
+            unallocated = functools.reduce(lambda x,y: x+y,
                                  [l.req_size for l in todo
                                   if l.req_grow and not l.req_percent])
             extra_portion = float(lv.req_size) / float(unallocated)

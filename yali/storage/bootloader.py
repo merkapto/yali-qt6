@@ -5,7 +5,7 @@ import glob
 import parted
 
 try:
-    from PyQt5.QtCore import QCoreApplication
+    from PyQt6.QtCore import QCoreApplication
     _ = QCoreApplication.translate
 except Exception:
     _ = lambda x, y: y
