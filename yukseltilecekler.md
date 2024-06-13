@@ -3,6 +3,7 @@ piksemel --> import piksemel
 - yali/util.py
 - yali/yalireadpiks.py
 - yali/pisiiface.py
+- tools/release-xml
 
 
 comar --> import comar

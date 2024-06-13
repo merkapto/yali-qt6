@@ -3,8 +3,8 @@
 import sys
 sys.path.append("./yali/gui")
 sys.path.append("../yali/gui")
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import *
+from PyQt6 import QtWidgets
+from PyQt6.QtCore import *
 
 app = QtWidgets.QApplication(sys.argv)
 win = QtWidgets.QMainWindow()
@@ -27,12 +27,12 @@ avaliable_modules = [
 
 module_name = sys.argv[1]
 if module_name not in avaliable_modules:
-    print " There is no module named with '%s' " % module_name
-    print " Avaliable modules are listed below: "
+    print(" There is no module named with '%s' ") % module_name
+    print(" Avaliable modules are listed below: ")
     for module in avaliable_modules:
-        print "\t - %s" % module
+        print("\t - %s") % module
 else:
-    print " Loading module %s ..." % module_name
+    print(" Loading module %s ...") % module_name
     m = __import__("%s" % module_name)
     w = m.Widget() #(win)
 
@@ -42,4 +42,4 @@ else:
 
     app.lastWindowClosed.connect(app.quit)
 
-    app.exec_()
+    app.exec()
