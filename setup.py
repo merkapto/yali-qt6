@@ -8,12 +8,13 @@
 # any later version.
 #
 # Please read the COPYING file.
+
 import os
 import sys
 import glob
 import shutil
 # import sipconfig    #py2
-import sipbuild   #py3
+# import sipbuild   #py3
 from distutils.core import setup, Extension
 from distutils.sysconfig import get_python_lib
 from distutils.cmd import Command
@@ -69,16 +70,13 @@ class YaliBuild(build):
 
     def compileUI(self, ui_file):
         # pyqt_configuration = sipconfig.Configuration()  #py2
-        pyqt_configuration = sipbuild.configurable.Configurable.configure()   #py3
+        # pyqt_configuration = sipbuild.configurable.Configurable.configure()   #py3
         # pyuic_exe = find_executable(
         #     'py2uic5', pyqt_configuration.default_bin_dir)
         # if not pyuic_exe:
         #     pyuic_exe = find_executable('py2uic5')
-        pyuic_exe = find_executable(
-            'pyuic6', pyqt_configuration.default_bin_dir)
-        if not pyuic_exe:
-            pyuic_exe = find_executable('pyuic6')
 
+        pyuic_exe = find_executable('pyuic6')
         cmd = [pyuic_exe, ui_file, '-o']
         cmd.append(py_file_name(ui_file))
         # cmd.append("-g \"yali\"")

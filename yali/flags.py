@@ -7,13 +7,13 @@ class Flags:
     def __getattr__(self, attr):
         if self.__dict__['flags'].has_key(attr):
             return self.__dict__['flags'][attr]
-        raise AttributeError, attr
+        raise AttributeError(attr)
 
     def __setattr__(self, attr, val):
         if self.__dict__['flags'].has_key(attr):
             self.__dict__['flags'][attr] = val
         else:
-            raise AttributeError, attr
+            raise AttributeError(attr)
 
     def get(self, attr, val=None):
         if self.__dict__['flags'].has_key(attr):

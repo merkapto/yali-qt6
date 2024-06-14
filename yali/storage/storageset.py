@@ -75,7 +75,8 @@ class BlkidTab(object):
 
     def __init__(self, chroot="/"):
         self.devices = {}
-        self.path = os.path.join(chroot, "etc/blkid/blkid.tab")
+        # self.path = os.path.join(chroot, "etc/blkid/blkid.tab")   #patch işlendi
+        self.path = os.path.join(chroot, "run/blkid/blkid.tab")
 
     def parse(self):
         with open(self.path) as blkidTab:

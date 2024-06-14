@@ -240,6 +240,7 @@ class OperationCreateFormat(DeviceOperation):
 
             self.device.disk.format.commitToDisk()
 
+        yali.baseudev.udev_settle()   #patch işlendi
         info = udev_get_block_device(self.device.sysfsPath)
         try:
             olduuid = udev_device_get_uuid(info)
